@@ -1,5 +1,6 @@
 #functions
 import numpy as np
+from sklearn.neighbors import KNeighborsClassifier
 
 def age_groups(x):
     '''This function is made for the age column. It creates age bins from the column.'''
@@ -37,3 +38,12 @@ def default_outlier(df, colnum1, colnum2):
         
     #returning the percent of defaults over the threshold
     return default_over_thresh
+
+def knn_creator(k, X_train_scale, y_train):
+    """This function will be used to create a K Nearest Neighbors model with a specified number of k"""
+    #make an instance of KNN, the default is k=5
+    knn = KNeighborsClassifier(n_neighbors = k)
+
+    knn.fit(X_train_scale, y_train)
+    
+    return knn
