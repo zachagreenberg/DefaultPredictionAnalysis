@@ -1,6 +1,7 @@
 #functions
 import numpy as np
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV
 
 def age_groups(x):
     '''This function is made for the age column. It creates age bins from the column.'''
@@ -47,3 +48,17 @@ def knn_creator(k, X_train_scale, y_train):
     knn.fit(X_train_scale, y_train)
     
     return knn
+
+#creating a function to perform grid searching
+def grid_search(model, param, custom_scorer, X_train_scale, y_train):
+    """
+    Performs grid search for your specified model type and includes the parameters of
+    a parameter dictionary
+    """
+    your_model = model()
+    
+    mod = GridSearchCV(estimator = your_model, param_grid = param, scoring = custom_scorer, cv = 5)
+
+    mod.fit(X_train_scale, y_train)
+    
+    return mod.best_params_, mod.best_score_
